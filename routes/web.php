@@ -10,16 +10,22 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\UsersController;
+use App\Http\Controllers\LocationsController;
+use Illuminate\Support\Facades\Auth;
+use App\User;
+use App\Location;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-// ユーザ登録
-Route::get('signup', 'Auth\RegisterController@showRegistrationForm')->name('signup.get');
-Route::post('signup', 'Auth\RegisterController@register')->name('signup.post');
+Auth::routes();
 
-// ログイン認証
-Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
-Route::post('login', 'Auth\LoginController@login')->name('login.post');
-Route::get('logout', 'Auth\LoginController@logout')->name('logout.get');
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::resource('users', 'UsersController', ['only' => ['index', 'show', 'edit', 'update']]);
+
+Route::get('users.edit', 'locationsController@list');
