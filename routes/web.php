@@ -27,5 +27,6 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('users', 'UsersController', ['only' => ['index', 'show', 'edit', 'update']]);
+Auth::routes();
 
-Route::get('users.edit', 'locationsController@list');
+Route::get('/home', 'HomeController@index')->name('home');

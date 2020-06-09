@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\User;
 use App\Location;
 
@@ -19,7 +20,7 @@ class UsersController extends Controller
     {
         $users = User::all();
 
-        return view('users.index',[ 'users' => $users, ]);
+        return view('users.index',['users' => $users]);
     }
 
     /**
@@ -62,8 +63,11 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        $auth = Auth::user();
-        return view('users.edit', [ 'auth' => $auth ]);
+        $user = Auth::user();
+        //都道府県情報
+        $location_list = Location::select('code', 'prefecture')->pluck('prefecture', 'code');
+
+        return view('users.edit', [ 'user' => $user, 'location_list' => $location_list ]);
     }
 
     /**
@@ -75,14 +79,21 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $auth = User::find($id);
-        $auth->name = $request->name;
-        $auth->age = $request->age;
-        $auth->location = $request->location_id;
-        $auth->profile_img = $request->profile_img;
-        $auth->save();
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->age = $request->age;
+        $user->location_id = $request->location_id;
+        //プロフィール画像をstorage/app/public/profile_imgs内に保存
+        if ($request->hasFile('profile_img')) {
+            if($request->file('profile_img')->isValid())
+            {
+                $user->profile_img = $request->profile_img;
+                $path = $user->profile_img->storeAs('public/userImg', Auth::id() . '_profile.jpg');
+            }
+        }
+        $user->save();
 
-        return redirect('/');
+        return view('users.show', ['user' => $user ]);
     }
 
     /**

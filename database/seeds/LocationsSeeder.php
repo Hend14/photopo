@@ -11,7 +11,7 @@ class LocationsSeeder extends Seeder
      */
     public function run()
     {
-        $location_list = [
+        $prefecture = [
             ['code' => 0, 'prefecture' => 'Select Your Prefecture'],
             ['code' => 1, 'prefecture' => '北海道'],
             ['code' => 2, 'prefecture' => '青森県'],
@@ -49,7 +49,7 @@ class LocationsSeeder extends Seeder
             ['code' => 34, 'prefecture' => '広島県'],
             ['code' => 35, 'prefecture' => '山口県'],
             ['code' => 36, 'prefecture' => '徳島県'],
-            ['code' => 37, 'prefecture' => '香川県'],
+            ['code' => 37, 'prefetcture' => '香川県'],
             ['code' => 38, 'prefecture' => '愛媛県'],
             ['code' => 39, 'prefecture' => '高知県'],
             ['code' => 40, 'prefecture' => '福岡県'],
@@ -61,6 +61,6 @@ class LocationsSeeder extends Seeder
             ['code' => 46, 'prefecture' => '鹿児島県'],
             ['code' => 47, 'prefecture' => '沖縄県'],
         ];
-        DB::table('location_list')->insert($location_list);
+        DB::table('locations')->insert($prefecture);
     }
 }

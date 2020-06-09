@@ -10,6 +10,8 @@ class Location extends Model
         'code', 'prefecture'
     ];
 
+    protected $primaryKey = "id";
+
     public function users()
     {
         return $this->hasMany(User::class);
