@@ -41,6 +41,6 @@
   @if (Auth::id() == $user->id)
     @include('posts.create')
   @endif
-  @include('posts.index')
+  @include('posts.index', ['posts' => $posts])
 </div>
 @endsection

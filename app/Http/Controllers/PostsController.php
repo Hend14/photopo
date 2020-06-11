@@ -20,14 +20,9 @@ class PostsController extends Controller
         if (Auth::check()) {
             $user = Auth::user();
             $posts = $user->posts()->orderBy('created_at', 'desc')->paginate(5);
-
-            $data = [
-                'user' => $user,
-                'posts' => $posts,
-            ];
         }
 
-        return view('posts.index', $data);
+        return view('posts.index', compact("user", "posts"));
     }
 
     /**
@@ -75,17 +70,10 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-        $auth = Auth::user();
+        $user = Auth::user();
         $posts = Post::find($id)->orderBy('created_at', 'desc')->paginate(5);
 
-        $data = [
-            'auth' => $auth,
-            'posts' => $posts,
-        ];
-
-        $data += $this->counts($posts);
-
-        return view('posts.show', $data);
+        return view('posts.show', compact("user", "posts"));
     }
 
     /**
