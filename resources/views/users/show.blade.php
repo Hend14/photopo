@@ -32,11 +32,15 @@
           @endif @if ($user->profile_img === null)
           <td>未設定</td>
           @else
-          <td> <img src="/storage/userImg/{{ Auth::id() }}_profile.jpg" width="auto" height="100px"> </td>
+          <td> <img src="/storage/userImg/{{ $user->id }}_profile.jpg" width="auto" height="100px"> </td>
           @endif
         </tr>
       </tbody>
     </table>
   </div>
+  @if (Auth::id() == $user->id)
+    @include('posts.create')
+  @endif
+  @include('posts.index')
 </div>
 @endsection

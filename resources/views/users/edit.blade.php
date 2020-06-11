@@ -27,7 +27,7 @@
   </div>
   <div class="form-group col-sm-10">
     {!! Form::label('profile_img', 'Profile image:') !!}
-    {!! Form::file('profile_img', old('profile_img'), ['class' => 'form-control']) !!}
+    {!! Form::file('profile_img', ['class' => 'form-control']) !!}
   </div>
   {!! Form::submit('Edit', ['class' => 'btn btn-secondary']) !!}
   {!! Form::close() !!}

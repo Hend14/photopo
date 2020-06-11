@@ -14,19 +14,20 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\LocationsController;
+use App\Http\Controllers\PostsController;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Location;
+use App\Post;
 
-Route::get('/', function () {
+Auth::routes();
+
+Route::get('/', function ()
+{
     return view('welcome');
 });
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Route::resource('users', 'UsersController', ['only' => ['index', 'show', 'edit', 'update']]);
-Auth::routes();
+Route::resource('users', 'UsersController', ['only' => ['index', 'show', 'edit', 'update', 'destroy']]);
+Route::resource('posts', 'PostsController')->middleware('auth');
 
 Route::get('/home', 'HomeController@index')->name('home');

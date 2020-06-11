@@ -10,4 +10,18 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+
+    /**
+     * Display user posts counts.
+     *
+     */
+    public function counts($user)
+    {
+        $count_posts = $user->posts()->count();
+
+        return [
+            'count_posts' => $count_posts,
+        ];
+    }
 }

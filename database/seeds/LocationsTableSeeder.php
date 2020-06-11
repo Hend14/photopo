@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class LocationsSeeder extends Seeder
+class LocationsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,7 +11,7 @@ class LocationsSeeder extends Seeder
      */
     public function run()
     {
-        $prefecture = [
+        $locations = [
             ['code' => 0, 'prefecture' => 'Select Your Prefecture'],
             ['code' => 1, 'prefecture' => '北海道'],
             ['code' => 2, 'prefecture' => '青森県'],
@@ -61,6 +61,6 @@ class LocationsSeeder extends Seeder
             ['code' => 46, 'prefecture' => '鹿児島県'],
             ['code' => 47, 'prefecture' => '沖縄県'],
         ];
-        DB::table('locations')->insert($prefecture);
+        DB::table('locations')->insert($locations);
     }
 }
