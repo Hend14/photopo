@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\User;
 use App\Location;
+use App\Post;
 
 class UsersController extends Controller
 {
@@ -53,10 +54,9 @@ class UsersController extends Controller
      */
     public function show(User $user)
     {
-        $user = Auth::user();
         $posts = $user->posts()->orderBy('created_at', 'desc')->paginate(5);
 
-        return view('users.show', compact("user", "posts"));
+        return view('users.show', compact('user', 'posts'));
     }
 
     /**
@@ -71,7 +71,7 @@ class UsersController extends Controller
         //都道府県情報
         $location_list = Location::select('code', 'prefecture')->pluck('prefecture', 'code');
 
-        return view('users.edit', [ 'user' => $user, 'location_list' => $location_list ]);
+        return view('users.edit', [ 'user' => $user, 'location_list' => $location_list]);
     }
 
     /**
@@ -92,12 +92,14 @@ class UsersController extends Controller
             if($request->file('profile_img')->isValid())
             {
                 $user->profile_img = $request->profile_img;
-                $path = $user->profile_img->storeAs('public/userImg', Auth::id() . '_profile.jpg');
+                $path = Storage::disk(config('s3'))->put('/user_img', $user->profile_img, 'public');
+
+                $user->profile_img->path = Storage::disk(config('s3'))->url($path);
             }
         }
         $user->save();
 
-        return view('users.show', ['user' => $user ]);
+        return view('users.show', ['user' => $user, 'prf_img_path' =>$user->profile_img->path ]);
     }
 
     /**

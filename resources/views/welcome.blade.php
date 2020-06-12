@@ -2,7 +2,7 @@
 
 @section('content')
     @if (Auth::check())
-    @include('users.show', $user = Auth::user())
+   {{ Auth::User()->name }}
     @else
         <div class="center">
             <div class="text-center">

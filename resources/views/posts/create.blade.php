@@ -9,6 +9,6 @@
     {!! Form::label('post_img', 'image:') !!}
     {!! Form::file('post_img', ['class' => 'form-control']) !!}
   </div>
-  {!! Form::submit('Post', ['class' => 'btn btn-secondary btn-block']) !!}
+  {!! Form::submit('Post', ['class' => 'btn btn-success btn-block']) !!}
   {!! Form::close() !!}
 </aside>

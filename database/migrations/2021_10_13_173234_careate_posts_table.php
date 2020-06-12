@@ -15,12 +15,13 @@ class CareatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id')->unsigned()->index();
             $table->string('content');
             $table->string('post_img')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('post_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
