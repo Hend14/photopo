@@ -31,7 +31,7 @@
                         @if ($user->profile_img === null)
                             <td>未設定</td>
                         @else
-                            <td><img src="/storage/userImg/{{ $user->id }}_profile.jpg" width="auto" height="60px"></td>
+                            <td><img src="{{ Storage::disk(config('s3'))->url($user->profile_img) }}" width="auto" height="60px"></td>
                         @endif
                     </tr>
                 @endforeach

@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Storage;
 
 class PostsController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -17,13 +22,10 @@ class PostsController extends Controller
      */
     public function index()
     {
-        if (Auth::check()) {
-        $user = Auth::user();
-        $post = Post::find($user->id);
-        $posts = $post->orderBy('created_at', 'desc')->paginate(5);
-        }
+        $posts = Post::all()->orderBy('created_at', 'desc')->paginate(5);
+        $path = Storage::disk(config('filesystems.default'))->url('$post_img');
 
-        return view('posts.index', compact("user", "posts"));
+        return view('posts.index', compact('user', 'posts', 'path'));
     }
 
     /**
@@ -50,22 +52,19 @@ class PostsController extends Controller
         ]);
 
         $post = new Post;
-        //ファイルが選択されていればs3の'post_img'フォルダへアップロード、なければnull
+        $post->content = $request->content;
+        $post->user_id = $request->user()->id;
+        //ファイルが選択されていればs3へアップロード,post_imgカラムにパスを保存
         if($request->hasFile('post_img'))
         {
-            $image = $request->file('post_img');
-            $path = Storage::disk(config('filesystems.default'))->putFile('post_img', $image, 'public');
-            //画像のパスを取得（post_imgカラム）
-            $post->post_img = Storage::disk(config('filesystems.default'))->url($path);
+            $post->post_img = Storage::disk(config('filesystems.default'))->putFile('/post_img', $request->file('post_img'), 'public');
         } else {
-            $post->post_img = null;
+            $request->post_img = null;
         }
 
+        // dd(Storage::disk(config('s3'))->url($post->post_img));
 
-        $post = $request->user()->posts()->create([
-            'content' => $request->content,
-            'post_img' => $request->post_img,
-        ]);
+        $post->save();
 
         return back();
     }
@@ -119,6 +118,7 @@ class PostsController extends Controller
 
         if (Auth::id() === $post->user_id) {
             $post->delete();
+            \Session::flash('flash_message', '削除しました。');
         }
 
         return back();

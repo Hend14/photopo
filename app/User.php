@@ -4,7 +4,6 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Post;
@@ -32,6 +31,11 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    /**
+     * softdeleteを有効にする
+     *
+     * @var array
+     */
     protected $dates = ['deleted_at'];
 
     public function location()

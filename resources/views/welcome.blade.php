@@ -2,7 +2,7 @@
 
 @section('content')
     @if (Auth::check())
-   {{ Auth::User()->name }}
+   <h1 class="text-center">Welcome : {!! link_to_route('users.show', Auth::User()->name, ['id' => Auth::User()->id]) !!}</h1>
     @else
         <div class="center">
             <div class="text-center">

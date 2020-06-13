@@ -28,6 +28,9 @@ Route::get('/', function ()
 });
 
 Route::resource('users', 'UsersController', ['only' => ['index', 'show', 'edit', 'update', 'destroy']]);
+Route::get('users.account','UsersController@account')->name('account');
+Route::get('users.softdelete', 'UsersController@softdelete')->name('softdelete');
+
 Route::resource('posts', 'PostsController')->middleware('auth');
 
 Route::get('/home', 'HomeController@index')->name('home');

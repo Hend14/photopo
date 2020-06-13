@@ -2,8 +2,11 @@
 @section('content')
 <div class="container">
   <h1>{{ $user->name }}</h1>
-  @if(Auth::user() == $user) {!! link_to_route('users.edit', 'Edit', ['user' => $user], ['class' => 'btn btn-lg btn-primary'])
-  !!} @endif
+  @if(Auth::user() == $user)
+    <div>
+      {!! link_to_route('users.edit', 'Edit', ['user' => $user], ['class' => 'btn btn-lg btn-primary']) !!}
+    </div>
+  @endif
   <div class="table-responsive">
     <table class="table table-striped">
       <thead>
@@ -32,7 +35,7 @@
           @endif @if ($user->profile_img === null)
           <td>未設定</td>
           @else
-          <td> <img src="/storage/userImg/{{ $user->id }}_profile.jpg" width="auto" height="100px"> </td>
+          <td> <img src="{{ Storage::disk(config('s3'))->url($user->profile_img) }}" width="auto" height="60px"> </td>
           @endif
         </tr>
       </tbody>
@@ -41,6 +44,6 @@
   @if (Auth::id() == $user->id)
     @include('posts.create')
   @endif
-  @include('posts.index', ['posts' =>$posts])
+  @include('posts.index', ['posts' =>$posts, 'user' =>$user])
 </div>
 @endsection

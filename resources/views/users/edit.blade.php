@@ -2,10 +2,10 @@
 @section('content')
 <h1 class="text-center">Edit My Account</h1>
 
-<div class=" pl-4 pr-4">
+<div class="pl-4 pr-4">
   {!! Form::model($user, ['route' => ['users.update', $user->id], 'files' => true, 'method' => 'put']) !!}
   {{ csrf_field() }}
-  <div class="form-group col-10">
+  <div class="form-group col-sm-10">
     {!! Form::label('name', 'Name:') !!}
     {!! Form::text('name', old('name'), ['class' => 'form-control']) !!}
   </div>
@@ -29,8 +29,14 @@
     {!! Form::label('profile_img', 'Profile image:') !!}
     {!! Form::file('profile_img', ['class' => 'form-control']) !!}
   </div>
-  {!! Form::submit('Edit', ['class' => 'btn btn-secondary']) !!}
-  {!! Form::close() !!}
+  <div class="col-sm-offset-2 col-sm-10">
+    {!! Form::submit('Edit', ['class' => 'btn btn-primary btn-wide']) !!}
+    {!! Form::close() !!}
+  </div>
+</div>
+<div class="mt-4">
+  <p>If you want delete account</p>
+  {!! link_to_route('account', 'Leave Photopo', ['id' => $user->id], ['class' => 'btn btn-sm btn-secondary']) !!}
 </div>
 
 @endsection

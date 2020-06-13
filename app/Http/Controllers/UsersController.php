@@ -87,19 +87,21 @@ class UsersController extends Controller
         $user->name = $request->name;
         $user->age = $request->age;
         $user->location_id = $request->location_id;
-        //プロフィール画像をstorage/app/public/profile_imgs内に保存
-        if ($request->hasFile('profile_img')) {
-            if($request->file('profile_img')->isValid())
-            {
-                $user->profile_img = $request->profile_img;
-                $path = Storage::disk(config('s3'))->put('/user_img', $user->profile_img, 'public');
+        //プロフィール画像をs3のuser_imgにアップロード
+        $this->validate($request, [
+            'post_img' => 'nullable|image',
+        ]);
 
-                $user->profile_img->path = Storage::disk(config('s3'))->url($path);
-            }
+        if ($request->hasFile('profile_img'))
+        {
+            $user->profile_img = Storage::disk(config('s3'))->put('/user_img', $request->file('profile_img'), 'public');
+
+            // dd(Storage::disk(config('s3'))->url($user->profile_img));
         }
+
         $user->save();
 
-        return view('users.show', ['user' => $user, 'prf_img_path' =>$user->profile_img->path ]);
+        return redirect('/');
     }
 
     /**
@@ -108,8 +110,23 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy()
+    public function destroy($id)
     {
         //
+    }
+
+    public function account()
+    {
+        $user = Auth::User();
+
+        return view('users.account', ['user' => $user]);
+    }
+
+    public function softdelete(Request $request)
+    {
+        $user = User::find($request->id);
+        $user->delete();
+
+        return redirect('/');
     }
 }
