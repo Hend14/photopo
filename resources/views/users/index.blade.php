@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <div class="container">
-    <h1>{{ __('Users') }}</h1>
+    <h1>Users</h1>
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
@@ -15,7 +15,7 @@
             </thead>
             <tbody>
                 @foreach ($users as $user)
-                    <tr>
+                    <tr height="100px">
                         <td>{{ $user->id }}</td>
                         <td><a href="{{ url('users/'.$user->id) }}">{{ $user->name }}</a></td>
                         @if ($user->age === null)
@@ -31,12 +31,13 @@
                         @if ($user->profile_img === null)
                             <td>未設定</td>
                         @else
-                            <td><img src="{{ Storage::disk(config('s3'))->url($user->profile_img) }}" width="auto" height="60px"></td>
+                            <td><img src="{{ Storage::disk(config('s3'))->url($user->profile_img) }}" width="auto" height="80px"></td>
                         @endif
                     </tr>
                 @endforeach
             </tbody>
         </table>
+        {{ $users->links('pagination::bootstrap-4') }}
     </div>
 </div>
 @endsection

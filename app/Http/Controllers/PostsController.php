@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
@@ -22,7 +23,7 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $posts = Post::all()->orderBy('created_at', 'desc')->paginate(5);
+        $posts = Post::orderBy('created_at', 'desc')->paginate(5);
         $path = Storage::disk(config('filesystems.default'))->url('$post_img');
 
         return view('posts.index', compact('user', 'posts', 'path'));

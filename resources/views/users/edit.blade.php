@@ -35,8 +35,7 @@
   </div>
 </div>
 <div class="mt-4">
-  <p>If you want delete account</p>
-  {!! link_to_route('account', 'Leave Photopo', ['id' => $user->id], ['class' => 'btn btn-sm btn-secondary']) !!}
+  <p>※Press the button to unsubscribe → {!! link_to_route('account', 'Delete account', ['id' => $user->id], ['class' => 'btn btn-sm btn-danger']) !!}</p>
 </div>
 
 @endsection

@@ -31,8 +31,8 @@
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->name }}</a>
                         <ul class="dropdown-menu dropdown-menu-right">
-                            <li class="dropdown-item">{!! link_to_route('users.show', 'My Account', ['user' => Auth::user()]) !!}</li>
-                            <li class="dropdown-divider"></li>
+                            <li class="dropdown-item">{!! link_to_route('users.show', 'My Page', ['user' => Auth::user()]) !!}</li>
+                            <li class="dropdown-item">{!! link_to_route('users.edit', 'Account Settings', ['user' => Auth::User()]) !!}</li>
                             <li class="dropdown-item">
                                 <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"> Logout </a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

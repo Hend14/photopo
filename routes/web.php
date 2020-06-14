@@ -29,7 +29,13 @@ Route::get('/', function ()
 
 Route::resource('users', 'UsersController', ['only' => ['index', 'show', 'edit', 'update', 'destroy']]);
 Route::get('users.account','UsersController@account')->name('account');
-Route::get('users.softdelete', 'UsersController@softdelete')->name('softdelete');
+Route::group(['prefix' => 'users/{id}'], function () {
+    Route::get('users.softdelete', 'UsersController@softdelete')->name('softdelete');
+    Route::post('follow', 'UserFollowController@store')->name('user.follow');
+    Route::delete('unfollow', 'UserFollowController@destroy')->name('user.unfollow');
+    Route::get('followings', 'UsersController@followings')->name('users.followings');
+    Route::get('followers', 'UsersController@followers')->name('users.followers');
+});
 
 Route::resource('posts', 'PostsController')->middleware('auth');
 
