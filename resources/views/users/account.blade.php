@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<h1 class="text-center">Delete My Account</h1>
+<h1>Delete My Account</h1>
 
 <h5 class="text-center mt-4">Delete your Photopo account... Are you sure?</h5>
 

@@ -22,10 +22,7 @@ use App\Post;
 
 Auth::routes();
 
-Route::get('/', function ()
-{
-    return view('welcome');
-});
+Route::get('/', 'PostsController@index');
 
 Route::resource('users', 'UsersController', ['only' => ['index', 'show', 'edit', 'update', 'destroy']]);
 Route::get('users.account','UsersController@account')->name('account');

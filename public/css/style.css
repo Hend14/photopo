@@ -1,0 +1,27 @@
+@charset "utf-8";
+
+h1 {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.user-img {
+    padding: 5px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-post-img {
+    width: 20%;
+    height:40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.post-img {
+    width: 180px;
+    height:180px;
+    object-fit: cover;
+}

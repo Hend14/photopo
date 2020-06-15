@@ -23,10 +23,13 @@ class PostsController extends Controller
      */
     public function index()
     {
+        if (Auth::check()){
+        $user = Auth::user();
         $posts = Post::orderBy('created_at', 'desc')->paginate(5);
         $path = Storage::disk(config('filesystems.default'))->url('$post_img');
+        }
 
-        return view('posts.index', compact('user', 'posts', 'path'));
+        return view('welcome', compact('user', 'posts', 'path'));
     }
 
     /**
@@ -47,9 +50,11 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
+        $content_max_length = config('common.content_max_length');
+        $image_max_size = config('common.image_max_size');
         $this->validate($request, [
-            'content' => 'required|max:150',
-            'post_img' => 'nullable|image',
+            'content' => "required|max:$content_max_length",
+            'post_img' => "nullable|image|max:$image_max_size",
         ]);
 
         $post = new Post;
@@ -58,6 +63,9 @@ class PostsController extends Controller
         //ファイルが選択されていればs3へアップロード,post_imgカラムにパスを保存
         if($request->hasFile('post_img'))
         {
+            // MEMO: リサイズ処理（GD, Imagemagick）
+            // Service層を導入してImageServiceクラスの関数に移す
+            // 入力：$request->file('post_img')、返り値：S3上の画像パス
             $post->post_img = Storage::disk(config('filesystems.default'))->putFile('/post_img', $request->file('post_img'), 'public');
         } else {
             $request->post_img = null;

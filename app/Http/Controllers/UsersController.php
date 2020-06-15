@@ -71,7 +71,7 @@ class UsersController extends Controller
         //都道府県情報
         $location_list = Location::select('code', 'prefecture')->pluck('prefecture', 'code');
 
-        return view('users.edit', [ 'user' => $user, 'location_list' => $location_list]);
+        return view('users.edit', [ 'user' => $user, 'location_list' => $location_list]);
     }
 
     /**
@@ -94,7 +94,7 @@ class UsersController extends Controller
 
         if ($request->hasFile('profile_img'))
         {
-            $user->profile_img = Storage::disk(config('s3'))->put('/user_img', $request->file('profile_img'), 'public');
+            $user->profile_img = Storage::disk(config('filesystems.default'))->put('/user_img', $request->file('profile_img'), 'public');
 
             // dd(Storage::disk(config('s3'))->url($user->profile_img));
         }

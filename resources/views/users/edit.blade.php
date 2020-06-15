@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<h1 class="text-center">Edit My Account</h1>
+<h1>Edit My Account</h1>
 
 <div class="pl-4 pr-4">
   {!! Form::model($user, ['route' => ['users.update', $user->id], 'files' => true, 'method' => 'put']) !!}
@@ -35,7 +35,7 @@
   </div>
 </div>
 <div class="mt-4">
-  <p>※Press the button to unsubscribe → {!! link_to_route('account', 'Delete account', ['id' => $user->id], ['class' => 'btn btn-sm btn-danger']) !!}</p>
+  {!! link_to_route('account', 'want to unsubuscribe?', ['id' => $user->id]) !!}
 </div>
 
 @endsection
