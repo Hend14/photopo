@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Validator;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\User;
 use App\Post;
 use Illuminate\Support\Facades\Storage;
 
@@ -23,12 +22,11 @@ class PostsController extends Controller
      */
     public function index()
     {
-        if (Auth::check()){
-        $user = Auth::user();
-        $posts = Post::orderBy('created_at', 'desc')->paginate(5);
-        $path = Storage::disk(config('filesystems.default'))->url('$post_img');
+        if (Auth::check()) {
+            $user = Auth::user();
+            $posts = $user->feed_posts()->orderBy('created_at', 'desc')->paginate(5);
+            $path = Storage::disk(config('filesystems.default'))->url('$post_img');
         }
-
         return view('welcome', compact('user', 'posts', 'path'));
     }
 
@@ -61,8 +59,7 @@ class PostsController extends Controller
         $post->content = $request->content;
         $post->user_id = $request->user()->id;
         //ファイルが選択されていればs3へアップロード,post_imgカラムにパスを保存
-        if($request->hasFile('post_img'))
-        {
+        if ($request->hasFile('post_img')) {
             // MEMO: リサイズ処理（GD, Imagemagick）
             // Service層を導入してImageServiceクラスの関数に移す
             // 入力：$request->file('post_img')、返り値：S3上の画像パス

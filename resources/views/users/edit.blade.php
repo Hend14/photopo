@@ -14,10 +14,6 @@
     {!! Form::text('email', old('email'), ['class' => 'form-control']) !!}
   </div>
   <div class="form-group col-sm-10">
-    {!! Form::label('password', 'Password:') !!}
-    {!! Form::password('password', old('password'), ['class' => 'form-control']) !!}
-  </div>
-  <div class="form-group col-sm-10">
     {!! Form::label('age', 'Age:') !!}
     {!! Form::number('age', old('age'), ['class' => 'form-control']) !!}
   </div>

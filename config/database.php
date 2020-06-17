@@ -46,7 +46,7 @@ return [
             'database' => env('DB_DATABASE', 'photopo'),
             'username' => env('DB_USERNAME', 'hend14'),
             'password' => env('DB_PASSWORD', 'as-130578'),
-            'unix_socket' => env('DB_SOCKET', ''),
+            'unix_socket' => env('DB_SOCKET', 'mysql'),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',

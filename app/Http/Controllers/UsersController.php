@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\User;
 use App\Location;
-use App\Post;
 
 class UsersController extends Controller
 {
@@ -85,6 +84,7 @@ class UsersController extends Controller
     {
         $user = User::find($id);
         $user->name = $request->name;
+        $user->email = $request->email;
         $user->age = $request->age;
         $user->location_id = $request->location_id;
         //プロフィール画像をs3のuser_imgにアップロード
@@ -158,5 +158,20 @@ class UsersController extends Controller
         $data += $this->counts($user);
 
         return view('users.followers', $data);
+    }
+
+    public function likes($id)
+    {
+        $user = User::find($id);
+        $likes = $user->likes()->paginate(10);
+
+        $data = [
+            'user' => $user,
+            'posts' => $likes,
+            ];
+
+            $data += $this->counts($user);
+
+            return view('users.likes', $data);
     }
 }
