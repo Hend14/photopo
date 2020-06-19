@@ -27,7 +27,7 @@ class PostsController extends Controller
             $posts = $user->feed_posts()->orderBy('created_at', 'desc')->paginate(5);
             $path = Storage::disk(config('filesystems.default'))->url('$post_img');
         }
-        return view('welcome', compact('posts', 'path'));
+        return view('welcome', compact('user', 'posts', 'path'));
     }
 
     /**
