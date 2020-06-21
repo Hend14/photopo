@@ -82,11 +82,15 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $name_max_length = config('common.name_max_length');
+        $email_max_length = config('common.email_max_length');
+        $age_max_length = config('common.age_max_length');
         $this->validate($request,[
-            'name' => "required",
-            'email' => "required",
+            'name' => "required|max:$name_max_length",
+            'email' => "required|max:$email_max_length",
+            'age' => "required|max:$age_max_length",
+            'post_img' => 'nullable|image',
             ]);
-        
         
         $user = User::find($id);
         $user->name = $request->name;
@@ -94,10 +98,6 @@ class UsersController extends Controller
         $user->age = $request->age;
         $user->location_id = $request->location_id;
         //プロフィール画像をs3のuser_imgにアップロード
-        $this->validate($request, [
-            'post_img' => 'nullable|image',
-        ]);
-
         if ($request->hasFile('profile_img'))
         {
             $user->profile_img = Storage::disk(config('filesystems.default'))->put('/user_img', $request->file('profile_img'), 'public');

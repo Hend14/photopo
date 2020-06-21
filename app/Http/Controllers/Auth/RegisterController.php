@@ -47,9 +47,11 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        $name_max_length = config('common.name_max_length');
+        $email_max_length = config('common.email_max_length');
         return Validator::make($data, [
-            'name' => 'required|string|max:20',
-            'email' => 'required|string|email|max:50|unique:users',
+            'name' => 'required|string|max:$name_max_length',
+            'email' => 'required|string|email|max:$email_max_length|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
     }
