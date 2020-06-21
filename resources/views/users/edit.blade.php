@@ -25,9 +25,9 @@
     {!! Form::label('profile_img', 'Profile image:') !!}
     {!! Form::file('profile_img', ['class' => 'form-control']) !!}
     @if($user->profile_img != null)
-    Current your image: <img class="user-img" src="{{ Storage::disk(config('s3'))->url($user->profile_img) }}">
+      Current your image: <img class="user-img" src="{{ Storage::disk(config('s3'))->url($user->profile_img) }}">
     @else
-    Current your image: (no image)
+      Current your image: (no image)
     @endif
   </div>
   <div class="col-sm-offset-2 col-sm-10">

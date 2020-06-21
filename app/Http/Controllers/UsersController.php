@@ -87,8 +87,8 @@ class UsersController extends Controller
         $age_max_length = config('common.age_max_length');
         $this->validate($request,[
             'name' => "required|max:$name_max_length",
-            'email' => "required|max:$email_max_length",
-            'age' => "required|max:$age_max_length",
+            'email' => "required|email|max:$email_max_length",
+            'age' => "required|integer|max:$age_max_length",
             'post_img' => 'nullable|image',
             ]);
         
