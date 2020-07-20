@@ -109,6 +109,7 @@ h2 {
 
 .post-card {
   background-color: #f6f6f6;
+  border-top: solid 5px rgb(195, 181, 181);
 }
 
 .post-form {

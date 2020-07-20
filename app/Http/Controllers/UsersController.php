@@ -25,27 +25,6 @@ class UsersController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -88,10 +67,10 @@ class UsersController extends Controller
         $this->validate($request,[
             'name' => "required|max:$name_max_length",
             'email' => "required|email|max:$email_max_length",
-            'age' => "required|integer|max:$age_max_length",
+            'age' => "nullable|integer|max:$age_max_length",
             'post_img' => 'nullable|image',
             ]);
-        
+
         $user = User::find($id);
         $user->name = $request->name;
         $user->email = $request->email;
@@ -108,17 +87,6 @@ class UsersController extends Controller
         $user->save();
 
         return redirect('/');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 
     public function account()

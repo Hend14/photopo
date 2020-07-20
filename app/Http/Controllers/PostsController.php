@@ -20,14 +20,29 @@ class PostsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Post $post)
     {
         if (Auth::check()) {
             $user = Auth::user();
             $posts = $user->feed_posts()->orderBy('created_at', 'desc')->paginate(5);
             $path = Storage::disk(config('filesystems.default'))->url('$post_img');
+
+            // $post->load('likes');
+
+            // $defaultCount = count($post->likes);
+            // userがpostに対していいねをしているか否かの判定
+            // $defaultLiked = $post->likes->where('user_id', $userAuth->id)->first();
+            // if ($defaultLiked == null) {
+            //     $defaultLiked == false;
+            // } else {
+            //     $defaultLiked == true;
+            // }
+
+            // dd($posts);
         }
-        return view('welcome', compact('user', 'posts', 'path'));
+
+
+        return view('welcome', compact('posts', 'path', 'user'));
     }
 
     /**
@@ -81,35 +96,29 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        $user = Auth::user();
-        $posts = Post::find($id)->orderBy('created_at', 'desc')->paginate(5);
+        $path = Storage::disk(config('filesystems.default'))->url('$post_img');
 
-        return view('posts.show', compact("user", "posts"));
-    }
+        $userAuth = Auth::user();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+        $post->load('likes');
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+        $defaultCount = count($post->likes);
+        // userがpostに対していいねをしているか否かの判定
+        $defaultLiked = $post->likes->where('user_id', $userAuth->id)->first();
+        if ($defaultLiked == null) {
+            $defaultLiked == false;
+        } else {
+            $defaultLiked == true;
+        }
+        return view('posts.show', [
+            'post' => $post,
+            'userAuth' => $userAuth,
+            'defaultLiked' => $defaultLiked,
+            'defaultCount' => $defaultCount,
+            'path' => $path
+        ]);
     }
 
     /**

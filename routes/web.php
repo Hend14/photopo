@@ -26,21 +26,16 @@ Auth::routes();
 Route::get('/', 'PostsController@index');
 
 Route::resource('users', 'UsersController', ['only' => ['index', 'show', 'edit', 'update', 'destroy']]);
-Route::group(['prefix' => 'users/{id}'], function () {
-    Route::get('account', 'UsersController@account')->name('account');
-    Route::get('softdelete', 'UsersController@softdelete')->name('softdelete');
-    Route::post('follow', 'UserFollowController@store')->name('user.follow');
-    Route::delete('unfollow', 'UserFollowController@destroy')->name('user.unfollow');
-    Route::get('followings', 'UsersController@followings')->name('users.followings');
-    Route::get('followers', 'UsersController@followers')->name('users.followers');
-    Route::get('likes', 'UsersController@likes')->name('users.likes');
-    Route::post('like', 'LikesController@store')->name('likes.like');
-    Route::delete('unlike', 'LikesController@destroy')->name('likes.unlike');
-});
+Route::get('account', 'UsersController@account')->name('account');
+Route::get('softdelete', 'UsersController@softdelete')->name('softdelete');
 
-Route::resource('posts', 'PostsController')->middleware('auth');
+Route::resource('posts', 'PostsController',['only' => ['index', 'create', 'store', 'show', 'destroy']])->middleware('auth');
 
-Route::group(['prefix' => 'posts/{id}'], function () {
-});
+Route::post('/users/{id}/follow', 'UserFollowController@store')->name('user.follow');
+Route::delete('/users/{id}/unfollow', 'UserFollowController@destroy')->name('user.unfollow');
+Route::get('/users/{id}/followings', 'UsersController@followings')->name('users.followings');
+Route::get('/users/{id}/followers', 'UsersController@followers')->name('users.followers');
+
+Route::get('/users/{id}/likes', 'UsersController@likes')->name('users.likes');
 
 Route::get('/home', 'HomeController@index')->name('home');

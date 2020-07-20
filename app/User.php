@@ -101,30 +101,5 @@ class User extends Authenticatable
         return $this->belongsToMany(Post::class,'likes','user_id','post_id')->withTimestamps();
     }
 
-    public function like($userId)
-    {
-        $exist = $this->is_liking($userId);
-        if ($exist) {
-            return false;
-        } else {
-            $this->likes()->attach($userId);
-            return true;
-        }
-    }
 
-    public function unlike($userId)
-    {
-        $exist = $this->is_liking($userId);
-        if ($exist) {
-            $this->likes()->detach($userId);
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public function is_liking($userId)
-    {
-        return $this->likes()->where('post_id', $userId)->exists();
-    }
 }
