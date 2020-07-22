@@ -45212,7 +45212,7 @@ var render = function() {
             }
           },
           [
-            _c("i", { staticClass: "far fa-heart" }),
+            _c("i", { staticClass: "far fa-heart btn-like" }),
             _vm._v(" " + _vm._s(_vm.likeCount))
           ]
         )
@@ -45228,7 +45228,7 @@ var render = function() {
             }
           },
           [
-            _c("i", { staticClass: "fas fa-heart" }),
+            _c("i", { staticClass: "fas fa-heart btn-like" }),
             _vm._v(" " + _vm._s(_vm.likeCount))
           ]
         )

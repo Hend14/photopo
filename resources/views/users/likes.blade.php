@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<h1>{{ $user->name }} likes</h1>
 <div class="row">
     <aside class="col-sm-4">
         @include('users.card', ['user' => $user])

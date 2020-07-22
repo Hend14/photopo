@@ -1,7 +1,7 @@
 <template>
   <div>
-    <button v-if="!liked" type="button" class="btn" @click="like(postId)"><i class="far fa-heart"></i> {{likeCount}}</button>
-    <button v-else type="button" class="btn" @click="unlike(postId)"><i class="fas fa-heart"></i> {{likeCount}}</button>
+    <button v-if="!liked" type="button" class="btn" @click="like(postId)"><i class="far fa-heart btn-like"></i> {{likeCount}}</button>
+    <button v-else type="button" class="btn" @click="unlike(postId)"><i class="fas fa-heart btn-like"></i> {{likeCount}}</button>
   </div>
 </template>
 
@@ -24,7 +24,6 @@
             let url = `/api/posts/${postId}/like`
             axios.post(url, {
               user_id: this.userId,
-              // post_id: postId
             })
             .then(response => {
               this.liked = true
@@ -38,7 +37,6 @@
             let url = `/api/posts/${postId}/unlike`
             axios.post(url, {
               user_id: this.userId,
-              // post_id: postId
             })
             .then(response => {
               this.liked = false
@@ -51,4 +49,3 @@
         }
     }
 </script>
-

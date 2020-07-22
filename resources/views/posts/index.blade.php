@@ -19,13 +19,6 @@
                         <img class="post-img" src="{{ Storage::disk(config('filesystems.default'))->url($post->post_img) }}"  width="auto"  height="200px">
                         @endif
                     </div>
-                    <!-- <div class="d-flex">
-                        @if (Auth::id() == $post->user_id)
-                        {!! Form::open(['route' => ['posts.destroy', $post->id], 'method' => 'delete']) !!}
-                        {!! Form::button('<i class="far fa-trash-alt"></i>', ['class' => "btn", 'type' => 'submit']) !!}
-                        {!! Form::close() !!}
-                        @endif
-                    </div> -->
                         <p>{!! link_to_route('posts.show', '詳細', ['post' => $post]) !!}</p>
                     <span class="text-muted">posted at {{ $post->created_at }}</span>
                 </div>
