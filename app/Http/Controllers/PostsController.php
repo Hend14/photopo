@@ -136,6 +136,6 @@ class PostsController extends Controller
             \Session::flash('flash_message', '削除しました。');
         }
 
-        return back();
+        return redirect('/');
     }
 }
