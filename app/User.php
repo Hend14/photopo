@@ -12,6 +12,7 @@ class User extends Authenticatable
 {
     use Notifiable;
     use SoftDeletes;
+    use \Askedio\SoftCascade\Traits\SoftCascadeTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -30,6 +31,13 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Userのリレーション先のデータもsoftdelete
+     * 
+     * @var array
+     */
+    protected $softCascade = ['posts'];
 
     /**
      * softdeleteを有効にする
