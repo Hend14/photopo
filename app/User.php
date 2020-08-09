@@ -34,10 +34,10 @@ class User extends Authenticatable
 
     /**
      * Userのリレーション先のデータもsoftdelete
-     * 
+     *
      * @var array
      */
-    protected $softCascade = ['posts'];
+    protected $softCascade = ['likes'];
 
     /**
      * softdeleteを有効にする
@@ -104,9 +104,15 @@ class User extends Authenticatable
         return $this->followings()->where('follow_id', $userId)->exists();
     }
 
-    public function likes()
+    public function like_post()
     {
         return $this->belongsToMany(Post::class,'likes','user_id','post_id')->withTimestamps();
+        // return $this->belongsToMany(Post::class,'likes','user_id','post_id')->withTimestamps();
+    }
+
+    public function likes()
+    {
+        return $this->hasMany('App\Like');
     }
 
 

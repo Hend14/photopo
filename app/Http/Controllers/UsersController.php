@@ -137,16 +137,15 @@ class UsersController extends Controller
     public function likes($id)
     {
         $user = User::find($id);
-        $likes = $user->likes()->paginate(10);
-        
-        
+        $likes = $user->like_post()->paginate(10);
+
         $data = [
             'user' => $user,
             'posts' => $likes,
         ];
 
         $data += $this->counts($user);
-            
+
         // dd($data);
 
         return view('users.likes', $data);
